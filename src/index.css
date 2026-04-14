@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+/* =========================
+   DESIGN TOKENS (CSS VARIABLES)
+========================= */
+:root {
+  --color-background: #0f1418;
+  --color-foreground: #f0f2f5;
+
+  --color-card: #141a1f;
+
+  --color-primary: #3b82f6; /* BLUE FIXED */
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #1f2830;
+
+  --color-muted: #252e37;
+  --color-muted-foreground: #9aa4b2;
+
+  --color-border: #242b32;
+
+  --color-highlight: #f5a623;
+
+  --radius: 12px;
+}
+
+/* =========================
+   BASE STYLES
+========================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: "Inter", sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: transparent;
+    color: inherit;
+    outline: none;
+  }
+}
+
+/* =========================
+   COMPONENTS
+========================= */
+@layer components {
+
+  .card {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+    padding: 0.6rem 1.4rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    transition: 0.2s;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+
+  .btn-secondary {
+    background-color: var(--color-secondary);
+    color: var(--color-foreground);
+    padding: 0.6rem 1.4rem;
+    border-radius: var(--radius);
+    transition: 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background-color: #273240;
+  }
+
+  .input {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    margin: 0.5rem 0;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-muted);
+    color: var(--color-foreground);
+  }
+
+  .input:focus {
+    border-color: var(--color-primary);
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background-color: var(--color-muted);
+    color: var(--color-muted-foreground);
+  }
+
+  .badge-high {
+    background-color: #3b1f1f;
+    color: #ff6b6b;
+  }
+
+  .badge-medium {
+    background-color: #2f2a1f;
+    color: #f5a623;
+  }
+
+  .badge-low {
+    background-color: #1f2f28;
+    color: #22c55e;
+  }
+}
+
+/* =========================
+   UTILITIES
+========================= */
+@layer utilities {
+
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    color: var(--color-primary);
+    font-size: large;
+  }
+
+  .flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    color: var(--color-primary);
+    font-size: large;
+  }
+  .flex-spacing{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0.5rem 1rem;
+    color: var(--color-primary);
+    font-size: large;
+  }
+
+  .text-muted {
+    color: var(--color-muted-foreground);
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .border-default {
+    border: 1px var(--color-border);
+  }
+
+  .focus-ring:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}

@@ -1,35 +1,42 @@
 import { useTasks } from "../../context/TaskContext";
 import Badge from "../ui/Badge";
-import Card from "../ui/Card";
 
 export default function TaskCard({ task }) {
   const { toggleStatus, deleteTask } = useTasks();
 
   return (
-    <div className={`task-card ${task.status === "completed" ? "completed" : ""}`}>
+    <div className="task-row">
 
-      {/* LEFT SIDE */}
-      <div className="task-info">
-        <h3>{task.title}</h3>
-        <p>{task.dueDate}</p>
-
-        <div className="task-badges">
-          <Badge type={task.priority}>{task.priority}</Badge>
-          <Badge type={task.status}>{task.status}</Badge>
-        </div>
+      <div className="task-col-title">
+        {task.title}
       </div>
 
-      {/* RIGHT SIDE */}
-      <div className="task-actions">
+      <div className="task-col-date">
+        {task.dueDate}
+      </div>
 
-        <button onClick={() => toggleStatus(task.id)}>
+      <div>
+        <Badge type={task.priority}>{task.priority}</Badge>
+      </div>
+
+      <div>
+        <Badge type={task.status}>{task.status}</Badge>
+      </div>
+
+      <div className="task-col-actions">
+        <button
+          onClick={() => toggleStatus(task.id)}
+          className="btn-primary"
+        >
           {task.status === "completed" ? "Undo" : "Complete"}
         </button>
 
-        <button onClick={() => deleteTask(task.id)}>
+        <button
+          onClick={() => deleteTask(task.id)}
+          className="btn-danger"
+        >
           Delete
         </button>
-
       </div>
 
     </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTasks } from "../context/TaskContext";
 
 import Layout from "../components/layout/Layout";
+import Badge from "../components/ui/Badge";
 
 export default function Tasks() {
   const { tasks, addTask, toggleStatus, deleteTask } = useTasks();
@@ -13,14 +14,9 @@ export default function Tasks() {
 
   const handleAdd = (e) => {
     e.preventDefault();
-
     if (!title) return;
 
-    addTask({
-      title,
-      dueDate,
-      priority,
-    });
+    addTask({ title, dueDate, priority });
 
     setTitle("");
     setDueDate("");
@@ -39,7 +35,7 @@ export default function Tasks() {
         <h1 className="text-2xl font-bold">Tasks</h1>
 
         {/* FILTERS */}
-        <div className="flex gap-2 items-spacing">
+        <div className="flex-spacing">
           {["all", "pending", "completed"].map(f => (
             <button
               key={f}
@@ -55,7 +51,6 @@ export default function Tasks() {
 
         {/* FORM */}
         <form onSubmit={handleAdd} className="card space-y-3">
-
           <input
             className="input"
             placeholder="Task title"
@@ -72,65 +67,93 @@ export default function Tasks() {
 
           <select
             className="input"
-            placeholder="Priority"
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
           >
-            <option value="low">low priority</option>
-            <option value="medium">medium priority</option>
-            <option value="high">high priority</option>
+            <option value="low">low</option>
+            <option value="medium">medium</option>
+            <option value="high">high</option>
           </select>
 
           <button className="btn-primary w-full">
             Add Task
           </button>
-
         </form>
 
-        {/* TASK LIST */}
-        <div className="space-y-3">
+        {/* TABLE */}
+        <div className="table-row">
+          {/* HEADER */}
+          <div className="flex-between">
+            <div className="width-min">Title</div>
+            <div className="width-min">Due Date</div>
+            <div className="width-min">Priority</div>
+            <div className="width-min">Status</div>
+            <div className="text-right">Actions</div>
+          </div>
 
+          {/* ROWS */}
           {filteredTasks.length === 0 ? (
-            <p className="text-muted">No tasks found.</p>
+            <p className=" p-4 text-gray-500">No tasks found.</p>
           ) : (
-            filteredTasks.map(task => (
-              <div
-                key={task.id}
-                className="card flex justify-between items-center"
-              >
+            filteredTasks.map(task => {
+              const isOverdue =
+                new Date(task.dueDate) < new Date() &&
+                task.status !== "completed";
 
-                <div>
-                  <h3 className="font-semibold">{task.title}</h3>
-                  <p className="text-sm text-muted">
-                    {task.dueDate}
-                  </p>
+              return (
+                <div
+                  key={task.id}
+                  className={`flex-rows px-6 py-4 items-center border-b hover:bg-gray-50 ${
+                    isOverdue ? "bg-red-50" : ""
+                  }`}
+                >
 
-                  <div className="flex gap-2 mt-2">
-                    <span className="badge">{task.priority}</span>
-                    <span className="badge">{task.status}</span>
+                  {/* TITLE */}
+                  <div className="width-min font-medium truncate">
+                    {task.title}
                   </div>
+
+                  {/* DATE */}
+                  <div className="width-min text-gray-500 text-sm">
+                    {task.dueDate}
+                  </div>
+
+                  {/* PRIORITY */}
+                  <div className="width-min">
+                    <Badge type={task.priority}>
+                      {task.priority}
+                    </Badge>
+                  </div>
+
+                  {/* STATUS */}
+                  <div className="width-min">
+                    <Badge type={task.status}>
+                      {task.status}
+                    </Badge>
+                  </div>
+
+                  {/* ACTIONS */}
+                  <div className=" button-spacing">
+                    <button
+                      onClick={() => toggleStatus(task.id)}
+                      className="btn-medium bg-green-500 text-white px-3 py-1 rounded text-sm"
+                    >
+                      {task.status === "completed"
+                        ? "Undo"
+                        : "Complete"}
+                    </button>
+
+                    <button
+                      onClick={() => deleteTask(task.id)}
+                      className="btn-medium bg-red-500 text-white px-3 py-1 rounded text-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+
                 </div>
-
-                <div className="flex gap-2 items-spacing">
-
-                  <button
-                    className="btn-secondary"
-                    onClick={() => toggleStatus(task.id)}
-                  >
-                    Toggle
-                  </button>
-
-                  <button
-                    className="btn-secondary"
-                    onClick={() => deleteTask(task.id)}
-                  >
-                    Delete
-                  </button>
-
-                </div>
-
-              </div>
-            ))
+              );
+            })
           )}
 
         </div>

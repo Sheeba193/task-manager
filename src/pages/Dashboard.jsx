@@ -5,12 +5,12 @@ export default function Dashboard() {
   const { tasks } = useTasks();
 
   const total = tasks.length;
-  const completed = tasks.filter(t => t.status === "completed").length;
-  const pending = tasks.filter(t => t.status !== "completed").length;
+  const completed = tasks.filter(t => t.status === "completed").length; // completed if status is "completed"
+  const pending = tasks.filter(t => t.status !== "completed").length; // pending if status is not "completed"
 
   const overdue = tasks.filter(t => {
     if (!t?.dueDate) return false;
-    return new Date(t.dueDate) < new Date() && t.status !== "completed";
+    return new Date(t.dueDate) < new Date() && t.status !== "completed"; // overdue if past due date and not completed
   }).length;
 
   const completionRate =
@@ -24,7 +24,7 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="space-y-6 ">
+      <div className="space-y-6 dashboard-header">
 
         {/* HEADER */}
         <div>
@@ -37,39 +37,34 @@ export default function Dashboard() {
         </div>
 
         {/* STATS GRID */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="stats-grid">
 
-          <div className="card border border-white/5">
-            <p className="text-muted text-sm">Total</p>
-            <h2 className="text-2xl font-bold text-white">{total}</h2>
+          <div className="stats-card">
+            <p className="stats-title">Total Tasks</p>
+            <h2 className="stats-value">{total}</h2>
           </div>
 
-          <div className="card border border-green-500/20">
-            <p className="text-muted text-sm">Completed</p>
-            <h2 className="text-2xl font-bold text-green-400">
-              {completed}
-            </h2>
+          <div className="stats-card green">
+            <p className="stats-title">Completed Tasks</p>
+            <h2 className="stats-value text-green-400">{completed}</h2>
           </div>
 
-          <div className="card border border-yellow-500/20">
-            <p className="text-muted text-sm">Pending</p>
-            <h2 className="text-2xl font-bold text-yellow-400">
-              {pending}
-            </h2>
+          <div className="stats-card yellow">
+            <p className="stats-title">Pending Tasks</p>
+            <h2 className="stats-value text-yellow-400">{pending}</h2>
           </div>
 
-          <div className="card border border-red-500/20">
-            <p className="text-muted text-sm">Overdue</p>
-            <h2 className="text-2xl font-bold text-red-400">
-              {overdue}
-            </h2>
+          <div className="stats-card red">
+            <p className="stats-title">Overdue Tasks</p>
+            <h2 className="stats-value text-red-400">{overdue}</h2>
           </div>
 
         </div>
 
+        
         {/* PROGRESS */}
         <div className="card border border-blue-500/20">
-          <p className="text-sm text-muted mb-2">
+          <p className="progress mb-2">
             Completion Progress
           </p>
 
@@ -86,10 +81,10 @@ export default function Dashboard() {
         </div>
 
         {/* INSIGHTS */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="stats-insights">
 
           <div className="card border border-yellow-500/20">
-            <h3 className="font-semibold text-yellow-400 mb-3">
+            <h3 className=" font-semibold text-yellow-400 mb-3">
               ⏳ Due Soon
             </h3>
 
@@ -106,7 +101,7 @@ export default function Dashboard() {
           </div>
 
           <div className="card border border-red-500/20">
-            <h3 className="font-semibold text-red-400 mb-3">
+            <h3 className=" font-semibold text-red-400 mb-3">
               ⚠️ Overdue
             </h3>
 

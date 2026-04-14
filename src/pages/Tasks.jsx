@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTasks } from "../context/TaskContext";
+
 import Layout from "../components/layout/Layout";
 
 export default function Tasks() {
@@ -38,7 +39,7 @@ export default function Tasks() {
         <h1 className="text-2xl font-bold">Tasks</h1>
 
         {/* FILTERS */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-spacing">
           {["all", "pending", "completed"].map(f => (
             <button
               key={f}
@@ -71,12 +72,13 @@ export default function Tasks() {
 
           <select
             className="input"
+            placeholder="Priority"
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
           >
-            <option value="low">low</option>
-            <option value="medium">medium</option>
-            <option value="high">high</option>
+            <option value="low">low priority</option>
+            <option value="medium">medium priority</option>
+            <option value="high">high priority</option>
           </select>
 
           <button className="btn-primary w-full">
@@ -109,7 +111,7 @@ export default function Tasks() {
                   </div>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-spacing">
 
                   <button
                     className="btn-secondary"

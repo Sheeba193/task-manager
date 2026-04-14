@@ -47,9 +47,9 @@ export default function TaskForm() {
         value={priority}
         onChange={(e) => setPriority(e.target.value)}
       >
-        <option value="low">low</option>
-        <option value="medium">medium</option>
-        <option value="high">high</option>
+        <option value="low">low priority</option>
+        <option value="medium">medium priority</option>
+        <option value="high">high priority</option>
       </select>
 
       <button onClick={handleSubmit} className="btn-primary w-full">

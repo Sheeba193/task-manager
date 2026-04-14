@@ -6,32 +6,32 @@ export default function TaskCard({ task }) {
   const { toggleStatus, deleteTask } = useTasks();
 
   return (
-    <Card className="flex justify-between items-center">
-      <div>
-        <h3 className="font-semibold">{task.title}</h3>
-        <p className="text-muted text-sm">{task.dueDate}</p>
+    <div className={`task-card ${task.status === "completed" ? "completed" : ""}`}>
 
-        <div className="mt-2 flex gap-2">
+      {/* LEFT SIDE */}
+      <div className="task-info">
+        <h3>{task.title}</h3>
+        <p>{task.dueDate}</p>
+
+        <div className="task-badges">
           <Badge type={task.priority}>{task.priority}</Badge>
           <Badge type={task.status}>{task.status}</Badge>
         </div>
       </div>
 
-      <div className="flex gap-2">
-        <button
-          className="btn-secondary"
-          onClick={() => toggleStatus(task.id)}
-        >
-          Toggle
+      {/* RIGHT SIDE */}
+      <div className="task-actions">
+
+        <button onClick={() => toggleStatus(task.id)}>
+          {task.status === "completed" ? "Undo" : "Complete"}
         </button>
 
-        <button
-          className="btn-secondary"
-          onClick={() => deleteTask(task.id)}
-        >
+        <button onClick={() => deleteTask(task.id)}>
           Delete
         </button>
+
       </div>
-    </Card>
+
+    </div>
   );
 }

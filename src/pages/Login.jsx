@@ -39,7 +39,7 @@ export default function Login() {
           </div>
 
           {/* INPUTS */}
-          <div className="space-y-3">
+             <div className="space-y-3">
             <input
               className="input"
               placeholder="Email address"

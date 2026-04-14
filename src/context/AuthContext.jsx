@@ -2,6 +2,8 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
+
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
@@ -10,23 +12,47 @@ export const AuthProvider = ({ children }) => {
     if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
 
-  const login = (email, password) => {
-    // simple mock login (you can improve later)
-    if (email && password) {
-      const fakeUser = { email };
-      localStorage.setItem("user", JSON.stringify(fakeUser));
-      setUser(fakeUser);
-      return true;
-    }
-    return false;
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
+  const isValidPassword = (password) => {
+  return password.length >= 6;
+};
+
+  const login = (email, password) => {
+  if (!isValidEmail(email)) {
+    alert("Please enter a valid email");
+    return false;
+  }
+
+  if (!isValidPassword(password)) {
+    alert("Password must be at least 6 characters");
+    return false;
+  }
+
+  const fakeUser = { email };
+  localStorage.setItem("user", JSON.stringify(fakeUser));
+  setUser(fakeUser);
+  return true;
+};
+
   const register = (email, password) => {
-    const newUser = { email };
-    localStorage.setItem("user", JSON.stringify(newUser));
-    setUser(newUser);
-    return true;
-  };
+  if (!isValidEmail(email)) {
+    alert("Invalid email format");
+    return false;
+  }
+
+  if (!isValidPassword(password)) {
+    alert("Password must be at least 6 characters");
+    return false;
+  }
+
+  const newUser = { email };
+  localStorage.setItem("user", JSON.stringify(newUser));
+  setUser(newUser);
+  return true;
+};
 
   const logout = () => {
     localStorage.removeItem("user");

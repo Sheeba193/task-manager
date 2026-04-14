@@ -5,12 +5,17 @@ import Register from "@/pages/Register";
 import Dashboard from "@/pages/Dashboard";
 import Tasks from "@/pages/Tasks";
 
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { TaskProvider } from "@/context/TaskContext";
 
 function ProtectedRoute({ children }) {
-  const user = JSON.parse(localStorage.getItem("user"));
-  return user ? children : <Navigate to="/" />;
+  const { user } = useAuth(); // ✅ use context instead of localStorage
+
+  if (!user) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
 }
 
 export default function App() {
@@ -20,11 +25,11 @@ export default function App() {
         <Router>
           <Routes>
 
-            {/* Auth Routes */}
+            {/* AUTH */}
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            {/* Protected App Routes */}
+            {/* PROTECTED */}
             <Route
               path="/dashboard"
               element={
@@ -45,6 +50,7 @@ export default function App() {
 
             {/* fallback */}
             <Route path="*" element={<Navigate to="/" />} />
+
           </Routes>
         </Router>
       </TaskProvider>

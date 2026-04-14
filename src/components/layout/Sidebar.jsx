@@ -6,7 +6,7 @@ export default function Sidebar() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="flex gap-4 p-4 space-y-2">
+    <div className="sidebar flex gap-4 p-4 space-y-2">
 
       <Link
         to="/dashboard"

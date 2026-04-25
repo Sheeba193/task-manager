@@ -49,7 +49,7 @@ A simple productivity dashboard built with **React + TailwindCSS** to help users
 git clone <your-repo-url>
 
 # move into project
-cd task-dashboard
+cd task-manager
 
 # install dependencies
 npm install
